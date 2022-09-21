@@ -6,11 +6,19 @@ import { Temperature } from "./styled";
 import { useGlobalContext } from "../../context/appContext";
 
 const Forecast = () => {
-  const { forecast, getLocation, isLoading, location } = useGlobalContext();
+  const { forecast, isLoading, location, getForecast } = useGlobalContext();
+
+  const [longitude, setLongitude] = useState(0);
+  const [latitude, setLatitude] = useState(0);
+
+  navigator.geolocation.getCurrentPosition((position) => {
+    setLatitude(position.coords.latitude);
+    setLongitude(position.coords.longitude);
+  });
 
   useEffect(() => {
-    getLocation();
-  }, []);
+    getForecast(latitude, longitude);
+  }, [longitude, latitude]);
 
   if (isLoading) {
     return (
@@ -21,7 +29,11 @@ const Forecast = () => {
   }
 
   if (!location) {
-    return <div>Por favor aceite a</div>;
+    return (
+      <div className="alert alert-danger">
+        Aceite ao acesso a localização para ver a temperatura
+      </div>
+    );
   }
 
   return (
@@ -32,7 +44,7 @@ const Forecast = () => {
           alt={forecast.weather[0].description}
         />
         <div>
-          {forecast.main.temp}ºc
+          {forecast.main.temp.toFixed()}ºc
           <span> {forecast.weather[0].description}</span>
         </div>
       </figure>

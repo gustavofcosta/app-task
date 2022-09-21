@@ -16,7 +16,7 @@ export const Temperature = styled.div`
     align-items: center;
 
     div {
-      font-size: 1.4rem;
+      font-size: 1.8rem;
       padding: 0 0.5rem;
 
       ${md} {

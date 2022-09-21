@@ -97,7 +97,6 @@ export default createGlobalStyle`
 
   ul {
     list-style-type: none;
-    padding: 0;
   }
 
   .img {
@@ -128,6 +127,11 @@ export default createGlobalStyle`
   .alert-success {
     color: ${colorGreenDark};
     background: ${colorGreenLight};
+  }
+
+  .location {
+    font-size: 1.2rem;
+    padding: 1rem;
   }
 
   ::placeholder {

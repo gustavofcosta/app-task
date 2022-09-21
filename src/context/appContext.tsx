@@ -34,7 +34,6 @@ export interface InitialContextInterface {
   location: boolean;
   getTasks: () => Promise<void>;
   getForecast: (lat: number, long: number) => Promise<void>;
-  getLocation: () => void;
 }
 
 export const initialState = {
@@ -73,12 +72,6 @@ export const AppProvider = ({ children }: ChildrenProps) => {
     }
   };
 
-  const getLocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      getForecast(position.coords.latitude, position.coords.longitude);
-    });
-  };
-
   const getTasks = async () => {
     dispatch({ type: TASKS_REQUEST });
 
@@ -92,9 +85,7 @@ export const AppProvider = ({ children }: ChildrenProps) => {
   };
 
   return (
-    <AppContext.Provider
-      value={{ ...state, getTasks, getForecast, getLocation }}
-    >
+    <AppContext.Provider value={{ ...state, getTasks, getForecast }}>
       {children}
     </AppContext.Provider>
   );

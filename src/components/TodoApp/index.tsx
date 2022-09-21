@@ -47,9 +47,6 @@ const TodoApp = () => {
           <RiTodoLine size="26px" />
           tarefas 3/{tasks.length}
         </Actives>
-        <DayOfTheWeek>
-          <span>Seg</span>5
-        </DayOfTheWeek>
       </Wrapper>
 
       <Tasks />

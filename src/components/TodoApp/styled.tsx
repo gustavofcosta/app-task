@@ -14,12 +14,17 @@ import { md } from "../../config/responsive";
 export const Wrapper = styled.div<{ isDayTime: boolean }>`
   background-color: ${({ isDayTime }) => (isDayTime ? dayColor : nightColor)};
   color: ${({ isDayTime }) => (isDayTime ? textColor : grey_300)};
+  padding-bottom: 1.5rem;
 
   nav {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 0.5rem;
+    padding: 1rem 2rem;
+
+    ${md} {
+      padding: 1rem 4rem;
+    }
 
     div {
       font-size: 1.5rem;

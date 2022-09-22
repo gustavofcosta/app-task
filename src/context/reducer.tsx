@@ -7,6 +7,8 @@ import {
   TASKS_FAILURE,
   TASKS_REQUEST,
   TASKS_SUCCESS,
+  DELETE_TASK_REQUEST,
+  DELETE_TASK_SUCCESS,
 } from "./actions";
 
 type ACTIONTYPE =
@@ -15,7 +17,9 @@ type ACTIONTYPE =
   | { type: "TASKS_FAILURE" }
   | { type: "FORECAST_REQUEST" }
   | { type: "FORECAST_SUCCESS"; payload: any }
-  | { type: "FORECAST_FAILURE" };
+  | { type: "FORECAST_FAILURE" }
+  | { type: "DELETE_TASK_REQUEST" }
+  | { type: "DELETE_TASK_SUCCESS"; payload: [] };
 
 const reducer = (state: typeof initialState, action: ACTIONTYPE) => {
   if (action.type === TASKS_REQUEST) {
@@ -60,6 +64,21 @@ const reducer = (state: typeof initialState, action: ACTIONTYPE) => {
     return {
       ...state,
       isLoading: false,
+    };
+  }
+
+  if (action.type === DELETE_TASK_REQUEST) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+
+  if (action.type === DELETE_TASK_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      tasks: action.payload,
     };
   }
 

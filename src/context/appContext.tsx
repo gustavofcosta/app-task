@@ -2,6 +2,8 @@ import React, { createContext, ReactNode, useContext, useReducer } from "react";
 import axios from "../services/axios";
 import reducer from "./reducer";
 import {
+  DELETE_TASK_REQUEST,
+  DELETE_TASK_SUCCESS,
   FORECAST_REQUEST,
   FORECAST_SUCCESS,
   TASKS_FAILURE,
@@ -34,6 +36,7 @@ export interface InitialContextInterface {
   location: boolean;
   getTasks: () => Promise<void>;
   getForecast: (lat: number, long: number) => Promise<void>;
+  deleteTask: (id: number) => void;
 }
 
 export const initialState = {
@@ -84,8 +87,22 @@ export const AppProvider = ({ children }: ChildrenProps) => {
     }
   };
 
+  const deleteTask = async (id: number) => {
+    dispatch({ type: DELETE_TASK_REQUEST });
+    try {
+      await axios.delete(`/tasks/${id}`);
+      const { data } = await axios.get("/tasks");
+      toast.success("tarefa deletada com sucesso");
+      dispatch({ type: DELETE_TASK_SUCCESS, payload: data });
+    } catch (error) {
+      toast.error("Não foi possível deletada a tarefa");
+    }
+  };
+
   return (
-    <AppContext.Provider value={{ ...state, getTasks, getForecast }}>
+    <AppContext.Provider
+      value={{ ...state, getTasks, getForecast, deleteTask }}
+    >
       {children}
     </AppContext.Provider>
   );

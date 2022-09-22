@@ -1,19 +1,14 @@
 import styled from "styled-components";
-import {
-  dayColor,
-  grey_300,
-  nightColor,
-  primary_400,
-  primary_500,
-  secondary_200,
-  secondary_300,
-  textColor,
-} from "../../config/colors";
+import { grey_200, primary_400 } from "../../config/colors";
 import { md } from "../../config/responsive";
+import { shadow_3 } from "../../config/shadows";
 
 export const Wrapper = styled.div<{ isDayTime: boolean }>`
-  background-color: ${({ isDayTime }) => (isDayTime ? dayColor : nightColor)};
-  color: ${({ isDayTime }) => (isDayTime ? textColor : grey_300)};
+  background-image: ${({ isDayTime }) =>
+    isDayTime ? "url(daytime.jpg)" : "url(night.jpg)"};
+  color: ${grey_200};
+  background-size: cover;
+  opacity: 0.9;
   padding-bottom: 1.5rem;
 
   nav {
@@ -43,7 +38,8 @@ export const Wrapper = styled.div<{ isDayTime: boolean }>`
       align-items: center;
       font-size: 1.2rem;
       border: none;
-      background-color: ${primary_500};
+      background-color: ${primary_400};
+      box-shadow: ${shadow_3};
 
       :hover {
         background-color: ${primary_400};

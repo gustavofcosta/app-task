@@ -12,6 +12,7 @@ import {
   primary_500,
   textColor,
 } from "../config/colors";
+import { md } from "../config/responsive";
 
 export default createGlobalStyle`
   :root {
@@ -197,6 +198,16 @@ export default createGlobalStyle`
 
   .loading {
     display: flex;
+  }
+
+  .noTasks {
+    text-align: center;
+    margin: 2rem;
+    font-size: 1.2rem;
+
+    ${md} {
+      font-size: 1.8rem;
+    }
   }
 
   .title {

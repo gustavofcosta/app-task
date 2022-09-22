@@ -19,6 +19,10 @@ const Tasks = () => {
     );
   }
 
+  if (tasks.length < 1) {
+    return <div className="noTasks">Nenhuma tarefa na lista</div>;
+  }
+
   return (
     <Ul>
       {tasks.map((task: TaskProps) => {

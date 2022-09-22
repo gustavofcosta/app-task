@@ -7,7 +7,7 @@ import {
 } from "../../config/colors";
 import { md } from "../../config/responsive";
 
-export const Wrapper = styled.li`
+export const Wrapper = styled.li<{ isCompleted: boolean }>`
   display: flex;
   align-items: center;
   height: 2.8rem;
@@ -16,28 +16,46 @@ export const Wrapper = styled.li`
   justify-content: space-between;
   padding: 0 1rem;
   border: 0.1rem solid ${grey_200};
-  border-left: 0.3rem solid ${colorGreenDark};
+  border-left: 0.3rem solid
+    ${({ isCompleted }) => (isCompleted ? colorRedDark : colorGreenDark)};
 
   ${md} {
     font-size: 1.8rem;
-    border-left: 0.5rem solid ${colorGreenDark};
+    border-left: 0.5rem solid
+      ${({ isCompleted }) => (isCompleted ? colorRedDark : colorGreenDark)};
   }
 
   div {
     display: flex;
   }
+
+  .completed {
+    text-decoration: line-through;
+  }
 `;
 
-export const IsDone = styled.div`
-  margin-right: 1rem;
+export const IsDone = styled.div<{ isCompleted: boolean }>`
+  margin-right: 1.4rem;
+  font-size: 1.4rem;
   cursor: pointer;
 
+  ${md} {
+    font-size: 1.9rem;
+  }
+
   :hover {
-    color: ${colorGreenDark};
+    color: ${({ isCompleted }) =>
+      isCompleted ? colorRedDark : colorGreenDark};
   }
 `;
 
 export const Remove = styled.div`
+  font-size: 1.4rem;
+
+  ${md} {
+    font-size: 1.9rem;
+  }
+
   cursor: pointer;
 
   :hover {

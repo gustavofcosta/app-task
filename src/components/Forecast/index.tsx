@@ -1,24 +1,17 @@
 import { useState, useEffect } from "react";
 import { Loading } from "../../styles/GlobalStyles";
 
-import axios from "axios";
 import { Temperature } from "./styled";
 import { useGlobalContext } from "../../context/appContext";
 
 const Forecast = () => {
   const { forecast, isLoading, location, getForecast } = useGlobalContext();
 
-  const [longitude, setLongitude] = useState(0);
-  const [latitude, setLatitude] = useState(0);
-
-  navigator.geolocation.getCurrentPosition((position) => {
-    setLatitude(position.coords.latitude);
-    setLongitude(position.coords.longitude);
-  });
-
   useEffect(() => {
-    getForecast(latitude, longitude);
-  }, [longitude, latitude]);
+    navigator.geolocation.getCurrentPosition((position) => {
+      getForecast(position.coords.latitude, position.coords.longitude);
+    });
+  }, []);
 
   if (isLoading) {
     return (

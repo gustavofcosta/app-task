@@ -50,7 +50,7 @@ export const AppContext = createContext<InitialContextInterface>(
 export const AppProvider = ({ children }: ChildrenProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const getForecast = async (lat: number, long: number) => {
+  const getForecast = async (latitude: number, longitude: number) => {
     try {
       dispatch({ type: FORECAST_REQUEST });
 
@@ -58,8 +58,8 @@ export const AppProvider = ({ children }: ChildrenProps) => {
         "https://api.openweathermap.org/data/2.5/weather",
         {
           params: {
-            lat: lat,
-            lon: long,
+            lat: latitude,
+            lon: longitude,
             appid: import.meta.env.VITE_WEATHER_KEY,
             lang: "pt_br",
             units: "metric",

@@ -10,12 +10,12 @@ const Forecast = () => {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
 
-  navigator.geolocation.getCurrentPosition((position) => {
-    setLongitude(position.coords.longitude);
-    setLatitude(position.coords.latitude);
-  });
-
   useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setLongitude(position.coords.longitude);
+      setLatitude(position.coords.latitude);
+    });
+
     getForecast(latitude, longitude);
   }, [latitude, longitude]);
 

@@ -27,7 +27,7 @@ const TodoApp = () => {
     if (currentHour > 18) {
       setIsDayTime(false);
     }
-  }, []);
+  }, [isDayTime]);
 
   return (
     <Container>

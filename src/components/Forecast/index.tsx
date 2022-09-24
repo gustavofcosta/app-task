@@ -27,7 +27,7 @@ const Forecast = () => {
     );
   }
 
-  if (!location || latitude === 0 || longitude === 0) {
+  if (!location) {
     return (
       <div className="alert alert-danger">
         Aceite ao acesso a localização para ver a temperatura

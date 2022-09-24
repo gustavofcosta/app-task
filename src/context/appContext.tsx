@@ -57,7 +57,7 @@ export const AppProvider = ({ children }: ChildrenProps) => {
     try {
       dispatch({ type: FORECAST_REQUEST });
 
-      const { data } = await axios.get(
+      let { data } = await axios.get(
         "https://api.openweathermap.org/data/2.5/weather",
         {
           params: {

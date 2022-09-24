@@ -10,9 +10,11 @@ import {
   grey_300,
   grey_400,
   primary_500,
+  primary_700,
   textColor,
 } from "../config/colors";
 import { md } from "../config/responsive";
+import { shadow_1, shadow_3 } from "../config/shadows";
 
 export default createGlobalStyle`
   :root {
@@ -107,11 +109,36 @@ export default createGlobalStyle`
   }
 
   .btn {
-
+    cursor: pointer;
+    color: ${colorWhite};
+    background: ${primary_500};
+    border: transparent;
+    border-radius: var(--borderRadius);
+    letter-spacing: var(--letterSpacing);
+    padding: 0.375rem 0.75rem;
+    box-shadow: ${shadow_1};
+    transition: var(--transition);
+    text-transform: capitalize;
+    display: inline-block;
   }
 
   .btn:hover {
+    background: ${primary_700};
+    box-shadow: ${shadow_3};
+  }
 
+  .btn-block {
+    width: 100%;
+  }
+
+  .btn-close {
+    text-align: right;
+    font-size: 1.5rem;
+    transition: var(--transition);
+  }
+
+  .btn-close:hover {
+    color: ${colorRedDark};
   }
 
   .alert {

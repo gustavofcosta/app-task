@@ -1,5 +1,10 @@
 import styled from "styled-components";
-import { grey_200, primary_400 } from "../../config/colors";
+import {
+  grey_200,
+  primary_400,
+  primary_500,
+  primary_700,
+} from "../../config/colors";
 import { md } from "../../config/responsive";
 import { shadow_3 } from "../../config/shadows";
 
@@ -30,6 +35,7 @@ export const Wrapper = styled.div<{ isDayTime: boolean }>`
     }
 
     button {
+      cursor: pointer;
       height: 3rem;
       width: 3rem;
       border-radius: 50%;
@@ -38,12 +44,11 @@ export const Wrapper = styled.div<{ isDayTime: boolean }>`
       align-items: center;
       font-size: 1.2rem;
       border: none;
-      background-color: ${primary_400};
+      background-color: ${primary_500};
       box-shadow: ${shadow_3};
 
       :hover {
-        background-color: ${primary_400};
-        cursor: pointer;
+        background-color: ${primary_700};
         transform: scale(1.1);
       }
 

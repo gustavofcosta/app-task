@@ -6,9 +6,15 @@ import {
   DELETE_TASK_SUCCESS,
   FORECAST_REQUEST,
   FORECAST_SUCCESS,
+  OPEN_MODAL,
+  CLOSE_MODAL,
   TASKS_FAILURE,
   TASKS_REQUEST,
   TASKS_SUCCESS,
+  HANDLE_CHANGE,
+  CREATE_TASK_BEGIN,
+  CREATE_TASK_ERROR,
+  CREATE_TASK_SUCCESS,
 } from "./actions";
 import { toast } from "react-toastify";
 
@@ -31,12 +37,18 @@ export interface ForecastProps {
 
 export interface InitialContextInterface {
   tasks: TaskProps[];
+  newTask: string;
   forecast: ForecastProps;
   isLoading: boolean;
   location: boolean;
+  isModal: boolean;
   getTasks: () => Promise<void>;
   getForecast: (lat: number, long: number) => Promise<void>;
   deleteTask: (id: number) => void;
+  openModal: () => void;
+  closeModal: () => void;
+  handleChange: any;
+  createNewTask: () => Promise<void>;
 }
 
 export const initialState = {
@@ -44,6 +56,8 @@ export const initialState = {
   forecast: {},
   isLoading: false,
   location: false,
+  isModal: false,
+  newTask: "",
 };
 
 export const AppContext = createContext<InitialContextInterface>(
@@ -91,17 +105,56 @@ export const AppProvider = ({ children }: ChildrenProps) => {
     dispatch({ type: DELETE_TASK_REQUEST });
     try {
       await axios.delete(`/tasks/${id}`);
-      const { data } = await axios.get("/tasks");
       toast.success("tarefa deletada com sucesso");
-      dispatch({ type: DELETE_TASK_SUCCESS, payload: data });
+      getTasks();
     } catch (error) {
       toast.error("Não foi possível deletada a tarefa");
     }
   };
 
+  const openModal = () => {
+    dispatch({ type: OPEN_MODAL });
+  };
+
+  const closeModal = () => {
+    dispatch({ type: CLOSE_MODAL });
+  };
+
+  const handleChange = (e: any) => {
+    let newTask = e.target.value;
+    console.log(newTask);
+
+    dispatch({ type: HANDLE_CHANGE, payload: newTask });
+  };
+
+  const createNewTask = async () => {
+    dispatch({ type: CREATE_TASK_BEGIN });
+    try {
+      await axios.post("/tasks", {
+        title: initialState.newTask,
+      });
+      console.log(initialState.newTask);
+
+      dispatch({ type: CREATE_TASK_SUCCESS });
+      toast.success("Sua nova tarefa foi criada");
+    } catch (error) {
+      dispatch({ type: CREATE_TASK_ERROR });
+      toast.error("Desculpe algo deu errado");
+    }
+  };
+
   return (
     <AppContext.Provider
-      value={{ ...state, getTasks, getForecast, deleteTask }}
+      value={{
+        ...state,
+        getTasks,
+        getForecast,
+        deleteTask,
+        openModal,
+        closeModal,
+        handleChange,
+        createNewTask,
+      }}
     >
       {children}
     </AppContext.Provider>

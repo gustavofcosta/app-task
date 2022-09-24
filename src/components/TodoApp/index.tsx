@@ -8,6 +8,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { RiTodoLine } from "react-icons/ri";
 import { useGlobalContext } from "../../context/appContext";
 import Tasks from "../Tasks";
+import NewTask from "../NewTask";
 
 interface PropsTemp {
   main: { temp: number };
@@ -17,7 +18,7 @@ interface PropsTemp {
 }
 
 const TodoApp = () => {
-  const { tasks, getTasks } = useGlobalContext();
+  const { tasks, openModal } = useGlobalContext();
 
   const [isDayTime, setIsDayTime] = useState(true);
 
@@ -36,10 +37,12 @@ const TodoApp = () => {
           <div>
             Bom dia,<span> Gustavo</span>
           </div>
-          <button>
+          <button onClick={openModal}>
             <AiOutlinePlus />
           </button>
         </nav>
+
+        <NewTask />
 
         <Forecast />
 

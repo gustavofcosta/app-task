@@ -17,7 +17,7 @@ const Forecast = () => {
     });
 
     getForecast(latitude, longitude);
-  }, [latitude, longitude]);
+  }, []);
 
   if (isLoading) {
     return (

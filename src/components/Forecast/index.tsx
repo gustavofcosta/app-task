@@ -7,11 +7,17 @@ import { useGlobalContext } from "../../context/appContext";
 const Forecast = () => {
   const { forecast, isLoading, location, getForecast } = useGlobalContext();
 
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+
+  navigator.geolocation.getCurrentPosition((position) => {
+    setLongitude(position.coords.longitude);
+    setLatitude(position.coords.latitude);
+  });
+
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      getForecast(position.coords.latitude, position.coords.longitude);
-    });
-  }, []);
+    getForecast(latitude, longitude);
+  }, [latitude, longitude]);
 
   if (isLoading) {
     return (
@@ -21,7 +27,7 @@ const Forecast = () => {
     );
   }
 
-  if (!location) {
+  if (!location || latitude === 0 || longitude === 0) {
     return (
       <div className="alert alert-danger">
         Aceite ao acesso a localização para ver a temperatura

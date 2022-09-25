@@ -27,6 +27,7 @@ export const Wrapper = styled.li<{ isCompleted: boolean }>`
 
   div {
     display: flex;
+    text-transform: lowercase;
   }
 
   .completed {

@@ -12,9 +12,13 @@ import {
   OPEN_MODAL,
   CLOSE_MODAL,
   HANDLE_CHANGE,
+  CLEAR_VALUES,
   CREATE_TASK_BEGIN,
   CREATE_TASK_SUCCESS,
   CREATE_TASK_ERROR,
+  EDITE_IS_COMPLETE_REQUEST,
+  EDITE_IS_COMPLETE_SUCCESS,
+  EDITE_IS_COMPLETE_FAILURE,
 } from "./actions";
 
 type ACTIONTYPE =
@@ -30,9 +34,13 @@ type ACTIONTYPE =
   | { type: "CLOSE_MODAL" }
   | { type: "CREATE_NEW_TASKS" }
   | { type: "HANDLE_CHANGE"; payload: string }
+  | { type: "CLEAR_VALUES" }
   | { type: "CREATE_TASK_BEGIN" }
   | { type: "CREATE_TASK_SUCCESS" }
-  | { type: "CREATE_TASK_ERROR" };
+  | { type: "CREATE_TASK_ERROR" }
+  | { type: "EDITE_IS_COMPLETE_REQUEST" }
+  | { type: "EDITE_IS_COMPLETE_SUCCESS" }
+  | { type: "EDITE_IS_COMPLETE_FAILURE" };
 
 const reducer = (state: typeof initialState, action: ACTIONTYPE) => {
   if (action.type === TASKS_REQUEST) {
@@ -127,6 +135,7 @@ const reducer = (state: typeof initialState, action: ACTIONTYPE) => {
     return {
       ...state,
       isLoading: false,
+      isModal: false,
     };
   }
 
@@ -134,6 +143,34 @@ const reducer = (state: typeof initialState, action: ACTIONTYPE) => {
     return {
       ...state,
       isLoading: false,
+    };
+  }
+
+  if (action.type === EDITE_IS_COMPLETE_REQUEST) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+
+  if (action.type === EDITE_IS_COMPLETE_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+
+  if (action.type === EDITE_IS_COMPLETE_FAILURE) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+
+  if (action.type === CLEAR_VALUES) {
+    return {
+      ...state,
+      newTask: "",
     };
   }
 

@@ -15,6 +15,10 @@ import {
   CREATE_TASK_BEGIN,
   CREATE_TASK_ERROR,
   CREATE_TASK_SUCCESS,
+  EDITE_IS_COMPLETE_REQUEST,
+  EDITE_IS_COMPLETE_SUCCESS,
+  EDITE_IS_COMPLETE_FAILURE,
+  CLEAR_VALUES,
 } from "./actions";
 import { toast } from "react-toastify";
 
@@ -49,15 +53,16 @@ export interface InitialContextInterface {
   closeModal: () => void;
   handleChange: any;
   createNewTask: () => Promise<void>;
+  editIsCompleted: (id: number) => void;
 }
 
 export const initialState = {
-  tasks: [],
+  tasks: [{} as TaskProps],
+  newTask: "",
   forecast: {},
   isLoading: false,
   location: false,
   isModal: false,
-  newTask: "",
 };
 
 export const AppContext = createContext<InitialContextInterface>(
@@ -121,24 +126,50 @@ export const AppProvider = ({ children }: ChildrenProps) => {
   };
 
   const handleChange = (e: any) => {
-    let newTask = e.target.value;
-    console.log(newTask);
+    dispatch({ type: HANDLE_CHANGE, payload: e.target.value });
+  };
 
-    dispatch({ type: HANDLE_CHANGE, payload: newTask });
+  const clearValue = () => {
+    dispatch({ type: CLEAR_VALUES });
   };
 
   const createNewTask = async () => {
     dispatch({ type: CREATE_TASK_BEGIN });
     try {
-      const { data } = await axios.post("/tasks", {
-        title: initialState.newTask,
+      await axios.post("/tasks", {
+        title: state.newTask,
       });
-      console.log(initialState.newTask);
 
       dispatch({ type: CREATE_TASK_SUCCESS });
       toast.success("Sua nova tarefa foi criada");
-    } catch (error) {
+      getTasks();
+      clearValue();
+    } catch (error: any) {
       dispatch({ type: CREATE_TASK_ERROR });
+      toast.error("Desculpe algo deu errado");
+    }
+  };
+
+  const editIsCompleted = async (id: number) => {
+    const task = state.tasks.find((task) => task.id === id);
+
+    if (!task) {
+      toast.error("Nenhuma tarefa com este id foi encontrada");
+    }
+
+    if (task) {
+      dispatch({ type: EDITE_IS_COMPLETE_REQUEST });
+    }
+
+    try {
+      await axios.patch(`/tasks/${id}`, {
+        isCompleted: true,
+      });
+      dispatch({ type: EDITE_IS_COMPLETE_SUCCESS });
+      toast.success("Tarefa completada");
+      getTasks();
+    } catch (error) {
+      dispatch({ type: EDITE_IS_COMPLETE_FAILURE });
       toast.error("Desculpe algo deu errado");
     }
   };
@@ -154,6 +185,7 @@ export const AppProvider = ({ children }: ChildrenProps) => {
         closeModal,
         handleChange,
         createNewTask,
+        editIsCompleted,
       }}
     >
       {children}

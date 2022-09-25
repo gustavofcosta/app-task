@@ -9,7 +9,7 @@ import { AppProvider } from "./context/appContext";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <AppProvider>
     <App />
-    <ToastContainer autoClose={2000} />
+    <ToastContainer autoClose={1500} />
     <GlobalStyles />
   </AppProvider>
 );

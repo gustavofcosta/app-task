@@ -25,7 +25,7 @@ const Tasks = () => {
 
   return (
     <Ul>
-      {tasks.map((task: TaskProps, index: number) => {
+      {tasks.map((task: TaskProps) => {
         return <Task key={task.id} {...task} />;
       })}
     </Ul>

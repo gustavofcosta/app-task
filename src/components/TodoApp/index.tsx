@@ -10,13 +10,6 @@ import { useGlobalContext } from "../../context/appContext";
 import Tasks from "../Tasks";
 import NewTask from "../NewTask";
 
-interface PropsTemp {
-  main: { temp: number };
-  name: string;
-  sys: { country: string };
-  weather: [{ description: string }];
-}
-
 const TodoApp = () => {
   const { tasks, openModal } = useGlobalContext();
 
@@ -29,6 +22,14 @@ const TodoApp = () => {
       setIsDayTime(false);
     }
   }, [isDayTime]);
+
+  let amount = 0;
+
+  tasks.forEach((item) => {
+    if (item.isCompleted === false) {
+      amount += 1;
+    }
+  });
 
   return (
     <Container>
@@ -48,7 +49,7 @@ const TodoApp = () => {
 
         <Actives>
           <RiTodoLine size="26px" />
-          tarefas 3/{tasks.length}
+          tarefas {amount}/{tasks.length}
         </Actives>
       </Wrapper>
 

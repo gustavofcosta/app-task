@@ -130,7 +130,7 @@ export const AppProvider = ({ children }: ChildrenProps) => {
   const createNewTask = async () => {
     dispatch({ type: CREATE_TASK_BEGIN });
     try {
-      await axios.post("/tasks", {
+      const { data } = await axios.post("/tasks", {
         title: initialState.newTask,
       });
       console.log(initialState.newTask);

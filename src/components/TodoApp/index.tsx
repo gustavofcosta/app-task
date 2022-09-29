@@ -35,9 +35,7 @@ const TodoApp = () => {
     <Container>
       <Wrapper isDayTime={isDayTime}>
         <nav>
-          <div>
-            Bom dia,<span> Gustavo</span>
-          </div>
+          <div>{isDayTime ? "Bom dia" : "Boa noite"}</div>
           <button onClick={openModal}>
             <AiOutlinePlus />
           </button>

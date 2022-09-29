@@ -1,6 +1,6 @@
 import { TaskProps, useGlobalContext } from "../../context/appContext";
 import { IsDone, Remove, Wrapper } from "./styled";
-import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
+import { AiOutlineCheck } from "react-icons/ai";
 import { CgTrashEmpty } from "react-icons/cg";
 
 const Task = ({ id, title, isCompleted }: TaskProps) => {
